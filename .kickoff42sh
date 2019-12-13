@@ -1,0 +1,87 @@
+KICK-OFF 42sh, 30/04/2018 10h00 par Marc Planard
+
+Choisir quelle base prendre
+
+Projet divise en 2 parties:
+- 1ere partie obligatoire (Mandatory): correspond ~80% aux minishell 1 et 2
+le but: ne pas le casser pdt qu'on rajoute d'autres features
+nouveaux separateurs ';' "&&" ...
+nouveau builtin: echo (ATTENTION BUILTIN ECHO != commande echo)
+regarder doc de builtin echo de tcsh, et non echo de systeme
+parsing important, gerer les priorites entre les differents separateurs (conseil: se documenter avant d'implementer)
+- "optionnel": a la carte: choisir celles qu'on a envie d'implementer (ne pas implementer 1 ou 2 car ce n'est pas assez => note pas terrible / ne pas tout implementer non plus car possible que tout ne marchera pas forcement ou a moitie/ 5 plutot raisonnable, jouer safe, bien s'organiser). la plupart de ces features sont evaluees en TA sauf 2/3 features en TAM (LINE EDITING et HISTORIQUE et JOB CONTROL, donc pas d'infos sur ou on en est...)
+
+CONSEIL: Lire les conseils du sujet !!!
+
+
+Examples donnes pendant le kick off
+
+- inhibitors: pr les sequences d'echappement
+echo "toto" affiche toto
+echo "to\"to" ne marche pas mais 'to\"to' marche
+echo to\"to marche
+
+- globing
+touch toto titi tata
+echo *
+ls t?t?
+ls t?to
+ls t[io]t?
+TIPS: pour '?' il y a une fonction dans la libC qui le gere
+
+- job control
+sur emacs: ctrl + z pour suspendre ou lancer emacs -nw &
+commandes jobs: affiche les processus suspendus
+fg, revient dans emacs
+pour revenir dans emacs: fg %1 (pr acceder au premier programme suspendu)
+						fg %2
+job control = pouvoir a travers le shell, landr des commandes, les envoyer en background et les recuperer quand on en a besoin
+
+- backticks
+setenv TOTO 'ls /tmp'
+echo $TOTO
+a execute la commande ls et recuperer l'output
+
+- parentheses:
+(ls / tmp | wc -l ; echo toto) > /tmp/log.txt
+cat /tmp/log.txt
+d'autres cas possibles d'utilisation des arentheres
+
+- variables
+dans tcsh, variables locales aussi autres que variable d'environnement
+ex: set key value
+a la fin du programme, le key disparait
+
+- variables speciales
+echo $term
+echo $precmd
+
+- historique
+history
+history 5
+!echo (permet de chercher dans l'historique)
+tape ! n'est pas mis dans l'historique
+
+-aliases
+alias ls ls -l
+ls
+alias (liste des alias)
+
+- line edition
+ligne de commande dynamique, tab etc... (ncurses)
+
+-scripting
+mettre commandes dans un fichier et faire execute ces commandes par le shell utilisation aussi avec boucles if while etc...
+interessant a faire mais un peu plus complique aussi
+
+Rappel PSU en tek1:
+programmer + apprendre a se documenter sur le systeme d'exploitation -> chercher comment c'est fait -> gagner en connaissance sur fonctionnement du systeme unix
+
+
+Follow up 42sh 07/05:
+- aucun bonus ne sera pris en compte si le reste ne fonctionne pas
+- conseil: ne pas essayer de tout faire (question d'4organisation)
+- scripting = TRES dur
+ATTENTION a la commande suivante (surement 1ere chose testee):
+ "cat /dev/urandom | ./42sh"
+ATTENTION au broken pipe -> segfault

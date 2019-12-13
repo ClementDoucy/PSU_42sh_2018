@@ -1,0 +1,13 @@
+42sh
+mysh
+*~
+#*#
+*.o
+*.gc*
+vgcore.*
+a.out
+tester
+libmy.a
+data
+.vscode
+main_test.c
